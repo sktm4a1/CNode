@@ -1,6 +1,6 @@
 import {observable,computed,autorun,action} from 'mobx'
 
-class AppSate {
+export default class AppSate {
 	@observable count = 0;
 	@observable name = 'Ez'
 	@computed get msg() {
@@ -14,7 +14,3 @@ class AppSate {
 	}
 }
 
-const appstate = new AppSate()
-
-
-export default appstate

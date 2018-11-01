@@ -42,6 +42,9 @@ export const topicSecondStyle = (theme) => {
 		},
 		replyColor:{
 			color:theme.palette.secondary[300]
+		},
+		createAt:{
+			marginLeft:'315px'
 		}
 	}
 }

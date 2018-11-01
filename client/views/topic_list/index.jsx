@@ -3,11 +3,18 @@ import {observer,inject} from 'mobx-react'
 // import Button from '@material-ui/core/Button'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import List from '@material-ui/core/List'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Container from '../layout/container'
 import TopicListItem from './list-item'
 
-@inject('appstate') @observer
+@inject(stores => {
+	return  {
+		appState:stores.appState,
+		topicStore:stores.topicStore
+	}
+}) @observer
 
 export default class TopicList extends React.Component {
 	constructor() {
@@ -29,18 +36,15 @@ export default class TopicList extends React.Component {
 	}
 
 	componentDidMount(){
-		// do some things  
+		this.props.topicStore.fetchTopics()  
 	}
 	render(){
 		const {tabIndex} = this.state;
-		const topic={
-			title:'伊泽瑞尔是个帅哥',
-			username:'faker',
-			reply_count:23,
-			visit_count:323,
-			create_at:'2018-11-1 14:16:59',
-			tab:'置顶'
-		}
+
+		const {topicStore} = this.props;
+		const topicList = topicStore.topics
+		const syncingTopics = topicStore.syncing
+		
 		return (
 			<Container>
 				<Tabs value={tabIndex} onChange={this.changTab}>
@@ -51,7 +55,18 @@ export default class TopicList extends React.Component {
 					<Tab label="精品" />
 					<Tab label="测试" />
 				</Tabs>
-				<TopicListItem onClick={this.listItemCLick} topic={topic} />
+				<List>
+					{
+						topicList.map(topic => <TopicListItem key={topic.id} onClick={this.listItemCLick} topic={topic} />)
+					}
+				</List>
+				{
+					syncingTopics ? (
+						<div>
+							<CircularProgress />
+						</div>
+					):null
+				}
 			</Container>
 		)
 	}

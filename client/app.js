@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'mobx-react'
 import {BrowserRouter} from 'react-router-dom'
 import {AppContainer} from 'react-hot-loader'
-import App from './views/App'
 import {MuiThemeProvider,createMuiTheme} from '@material-ui/core/styles'
 import {lightBlue,deepOrange} from '@material-ui/core/colors'
-import appstate from './store/app-state'
+// import appState from './store/app-state'
 
+import App from './views/App'
+import {AppState,TopicStore} from './store/store'
 
 const theme = createMuiTheme({
 	typography: {
@@ -23,12 +24,16 @@ const theme = createMuiTheme({
 // ReactDOM.render(<App />,document.getElementById('root'))  
 // 服务端渲染使用hydrate -- 生成环境下     
 
+const initialState = window.__INITIAL__STATE__ || {}
 const iroot = document.getElementById('root')
+
+const appState = new AppState(initialState.appState)
+const topicStore = new TopicStore(initialState.topicStore)
 
 const render = Component => {
 	ReactDOM.render(
 		<AppContainer>
-			<Provider appstate={appstate}>
+			<Provider appState={appState} topicStore={topicStore}>
 				<BrowserRouter>
 					<MuiThemeProvider theme={theme}>
 						<Component />

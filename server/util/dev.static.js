@@ -13,11 +13,13 @@ const getTemplate = () => {
 		.then(res => {
 			resolve(res.data)
 		})
-		.catch(reject())
+		.catch(err => {
+			reject(err)
+		})
 	})
 }
 
-let severBundle;
+let severBundle,createStoreMap;
 const Module = module.constructor
 
 const mfs = new memoryFs
@@ -36,6 +38,7 @@ serverCompiler.watch({},(err,stats) => {
 	const m = new Module()
 	m._compile(bundle,'server-entry.js')
 	severBundle = m.exports.default
+	createStoreMap = m.exports.createStoreMap
 })
 
 module.exports = function(app){
@@ -45,8 +48,19 @@ module.exports = function(app){
 
 	app.get('*',function(req,res){
 		getTemplate().then(template => {
-			const content = ReactDomServer.renderToString(severBundle)
+
+			const routerContext = {}
+			const app = severBundle(createStoreMap(),routerContext,req.url)
+
+			const content = ReactDomServer.renderToString(app)
+			if(routerContext.url){
+				res.status(302).setHeader('Location',routerContext.url)
+				res.end()
+				return
+			}
 			res.send(template.replace('<!-- App -->',content))
+		}).catch(err => {
+			reject(err)
 		})
 	})
 }
