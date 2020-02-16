@@ -1,7 +1,9 @@
 const path = require('path')
 const webpack = require('webpack')
+const webpackMerge = require('webpack-merge')
+const webpackBaseConfig = require('./webpack.base')
 
-module.exports = {
+module.exports = webpackMerge(webpackBaseConfig,{
 	target:"node",
 	mode:"development",
 	entry:{
@@ -9,26 +11,23 @@ module.exports = {
 	},
 	output:{
 		filename:'server-entry.js',
-		path:path.join(__dirname,'../dist'),
-		publicPath:'/public/',
+		// path:path.join(__dirname,'../dist'),
+		// publicPath:'/public/',
 		libraryTarget:'commonjs2'
 	},
-	module:{
-		rules:[
-			{
-				test:/.(jsx|js)$/,
-				loader:'babel-loader',
-				exclude:path.join(__dirname,'../node_modules/')
-			}
-		]
-	},
+	// module:{
+	// 	rules:[
+	// 		{
+	// 			test:/\.(jsx|js)$/,
+	// 			loader:'babel-loader',
+	// 			exclude:path.join(__dirname,'../node_modules/')
+	// 		}
+	// 	]
+	// },
 	externals:Object.keys(require('../package.json').dependencies),
-	resolve:{
-		extensions:['.js','.jsx']
-	},
 	plugins:[
 		new webpack.DefinePlugin({
 			'process.env.API_BASE':'"http://127.0.0.1:8080"'
 		})
 	]
-}
+})

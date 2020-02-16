@@ -1,6 +1,7 @@
 import React from 'react'
 import {observer,inject} from 'mobx-react'
 import PropTypes from 'prop-types'
+import Helmet from "react-helmet";
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import List from '@material-ui/core/List'
@@ -16,8 +17,9 @@ import {tabs} from '../../util/variable-define'
 		appState:stores.appState,
 		topicStore:stores.topicStore
 	}
-}) @observer
+}) 
 
+@observer
 export default class TopicList extends React.Component {
 	static contextTypes = {
 		router:PropTypes.object
@@ -27,6 +29,15 @@ export default class TopicList extends React.Component {
 		this.changTab = this.changTab.bind(this)
 		this.listItemCLick = this.listItemCLick.bind(this)
 	}	
+
+	asyncBootstrap() {
+		return new Promise(resolve => {
+			setTimeout(() => {
+				this.props.appState.count = 3;
+				resolve(true)
+			})
+		})
+	}
 
 	changTab(e,value) {
 		this.context.router.history.push({
@@ -59,6 +70,11 @@ export default class TopicList extends React.Component {
 		const tab = this.getTab()
 		return (
 			<Container>
+				<Helmet>
+					<title>This is topic list page</title>
+					<meta name="description" content="This is topic list description" />
+					<meta name="keywords" content="topic hello react" />
+				</Helmet>
 				<Tabs value={tab} onChange={this.changTab}>					
 					{
 						Object.keys(tabs).map(item => {

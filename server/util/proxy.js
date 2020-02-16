@@ -5,7 +5,7 @@ module.exports = function(req,res,next) {
 	const path = req.path;
 	const user = req.session.user || {}
 	const needAccessToken = req.query.needAccessToken
-	const baseUrl = 'http://cnodejs.org/api/v1'
+	const baseUrl = 'https://cnodejs.org/api/v1'
 
 	if(needAccessToken && !user.accessToken){
 		res.status(401).send({
@@ -21,12 +21,12 @@ module.exports = function(req,res,next) {
 	axios(`${baseUrl}${path}`,{
 		method:req.method,
 		params:query,
+		headers:{
+			'Content-Type':'application/x-www-form-urlencoded'
+		},
 		data:querystring.stringify(Object.assign({},req.body,{
 			accesstoken:(needAccessToken && req.method === 'POST') ? user.accessToken : ''
-		})),
-		headers:{
-			'Content-type':'application/x-www-form-urlencoded'
-		}
+		}))
 	}).then(resp => {
 		if(resp.status === 200){
 			res.send(resp.data)
