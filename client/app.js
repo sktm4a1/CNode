@@ -4,18 +4,18 @@ import { Provider } from "mobx-react";
 import { BrowserRouter } from "react-router-dom";
 import { AppContainer } from "react-hot-loader";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import { lightBlue, deepOrange } from "@material-ui/core/colors";
+import { lightBlue, pink} from "@material-ui/core/colors";
 
 import App from "./views/App";
 import { AppState, TopicStore } from "./store/store";
 
 const theme = createMuiTheme({
 	typography: {
-		useNextVariants: true
+		useNextVariants: true,
 	},
 	palette: {
 		primary: lightBlue,
-		secondary: deepOrange,
+		secondary: pink,
 		type: "light"
 	}
 });

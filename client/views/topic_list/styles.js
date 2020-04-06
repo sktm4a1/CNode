@@ -37,7 +37,7 @@ export const topicSecondStyle = (theme) => {
 			display:'flex',
 			alignItems:'center',
 			paddingTop:3,
-			color:'#3ef666',
+			color:'#07c6e7',
 			fontSize:'14px',
 			fontFamily:'Microsoft Yahei'
 		},
@@ -54,7 +54,8 @@ export const topicSecondStyle = (theme) => {
 			color:theme.palette.secondary[300]
 		},
 		createAt:{
-			marginLeft:'15px'
+			marginLeft:'15px',
+			color:"red"
 		}
 	}
 }

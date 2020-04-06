@@ -31,15 +31,6 @@ export default class TopicList extends React.Component {
 		this.listItemCLick = this.listItemCLick.bind(this)
 	}	
 
-	asyncBootstrap() {
-		return new Promise(resolve => {
-			setTimeout(() => {
-				this.props.appState.count = 3;
-				resolve(true)
-			})
-		})
-	}
-
 	changTab(e,value) {
 		this.context.router.history.push({
 			pathname:'/index',

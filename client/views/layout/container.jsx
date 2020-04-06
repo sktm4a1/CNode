@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from "prop-types"
 import Paper from '@material-ui/core/Paper'
 import {withStyles} from '@material-ui/core/styles'
 
@@ -14,5 +15,11 @@ const Container = ({classes,children}) => (
 		{children}
 	</Paper>
 )
-
+Container.propTypes = {
+	classes:PropTypes.object.isRequired,
+	children:PropTypes.oneOfType([
+		PropTypes.arrayOf(PropTypes.element),
+		PropTypes.element
+	])
+}
 export default withStyles(styles)(Container)
