@@ -1,11 +1,10 @@
-# CNode
-a react project---尝试构建NodeJs中文社区
-> 原网站https://cnodejs.org
+# CNode网站
+尝试构建[NodeJs中文社区](https://cnodejs.org)
 
-## 目标
+## 技术栈
 
-1. 学习react、webpack、node
-2. 后续更新。。。
+1. react、webpack、node
+2. [Material-UI](https://v1.mui.com/getting-started/installation/)组件库
 
 ## 注意
 1.  先要npm run build 生成dist文件夹，否则后面npm run dev报错。
